@@ -591,19 +591,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 7761503842427098016}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecabd8da356d3f642a536e698fa064ad, type: 3}
+  m_Script: {fileID: 11500000, guid: d538a77ee3ef09e4aa123688b4f5380f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   time: 15
   informationBar: {fileID: 7761503840930297781}
   timeBar: {fileID: 7761503842072857626}
-  icon: {fileID: 7761503841012548048}
+  iconLayer: {fileID: 7761503841012548048}
   iconTitle: {fileID: 7761503841587909294}
   textContent: {fileID: 7761503841425373660}
-  information: {fileID: 21300000, guid: a5f528fc320483d45a580527b6629d47, type: 3}
-  success: {fileID: 21300000, guid: f1fc281bdfaed9344818a5d8b520e4c6, type: 3}
-  warning: {fileID: 21300000, guid: d9b19df0de0891f4eb73de2b7e413115, type: 3}
-  error: {fileID: 21300000, guid: f9b5c14b1888f68418999b15b6b5fb3f, type: 3}
+  notifyList:
+  - type: Information
+    iconSprite: {fileID: 21300000, guid: a5f528fc320483d45a580527b6629d47, type: 3}
+    notifyColor: {r: 0.14925243, g: 0.5111648, b: 0.8113208, a: 1}
+  - type: Success
+    iconSprite: {fileID: 21300000, guid: f1fc281bdfaed9344818a5d8b520e4c6, type: 3}
+    notifyColor: {r: 0.3255162, g: 0.7264151, b: 0.34187493, a: 1}
+  - type: Warning
+    iconSprite: {fileID: 21300000, guid: d9b19df0de0891f4eb73de2b7e413115, type: 3}
+    notifyColor: {r: 0.8396226, g: 0.71184045, b: 0.2415895, a: 1}
+  - type: Error
+    iconSprite: {fileID: 21300000, guid: f9b5c14b1888f68418999b15b6b5fb3f, type: 3}
+    notifyColor: {r: 0.8679245, g: 0.25792095, b: 0.25792095, a: 1}
 --- !u!82 &6883258662804698450
 AudioSource:
   m_ObjectHideFlags: 0

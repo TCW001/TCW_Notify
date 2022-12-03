@@ -1,23 +1,29 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+[System.Serializable]
+public class NotifyList
+{
+    [Header("NotifyList")]
+    public string type;
+    public Sprite iconSprite;
+    public Color notifyColor;
+}
 
 public class NotifyManager : MonoBehaviour
 {
     [Header("Settings")]
-    public float time;
+    [SerializeField] private float time;
 
     [Header("Components")]
-    public Image informationBar;
-    public Image timeBar;
-    public Image icon;
-    public Text iconTitle;
-    public Text textContent;
+    [SerializeField] private Image informationBar;
+    [SerializeField] private Image timeBar;
+    [SerializeField] private Image iconLayer;
+    [SerializeField] private Text iconTitle;
+    [SerializeField] private Text textContent;
 
-    [Header("Icons")]
-    public Sprite information;
-    public Sprite success;
-    public Sprite warning;
-    public Sprite error;
+    [SerializeField] private NotifyList[] notifyList = new NotifyList[4];
 
     // Hidden variables
     private float currentTime;
@@ -27,104 +33,56 @@ public class NotifyManager : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-
         currentTime = time;
         activeTimer = true;
-
-        audioSource.Play(); // Audio
+        audioSource.Play();
     }
 
     void Update()
     {
-        // Activating the countdown
         if (activeTimer)
         {
             currentTime -= Time.deltaTime;
-            timeBar.fillAmount = currentTime / time;
+            timeBar.fillAmount = currentTime / time; 
 
-            if (currentTime < 0)
-            {
-                Destroy(gameObject);
-            }
+            if (currentTime < 0) { Destroy(gameObject); }
         }
     }
 
-    // Public function to Instantiate Notify with the appropriate texts and icons
-    // Called in other scripts where you want to use it
+    private int ListTypeIndex(string type)
+    {
+        for (int i = 0; i < notifyList.Length; i++)
+        {
+            if (notifyList[i].type == type) return i;
+        }
+        Debug.LogWarning("O tipo" + type + "de notificação não existe");
+        return -1;
+    }
+
     public void Notify(string type, string title, string text, float timer)
     {
-        time = timer;
+        int index = ListTypeIndex(type);
+        if (index == -1) return;
+
         iconTitle.text = title;
         textContent.text = text;
+        time = timer;
 
         // Notify Type
-        switch (type)
-        {
-            case "Information":
-                icon.sprite = information;
-                informationBar.color = new Color32(112, 162, 235, 255);
-                timeBar.color = new Color32(112, 162, 235, 255);
-                break;
-
-            case "Success":
-                icon.sprite = success;
-                informationBar.color = new Color32(104, 195, 123, 255);
-                timeBar.color = new Color32(104, 195, 123, 255);
-                break;
-
-            case "Warning":
-                icon.sprite = warning;
-                informationBar.color = new Color32(226, 214, 78, 255);
-                timeBar.color = new Color32(226, 214, 78, 255);
-                break;
-
-            case "Error":
-                icon.sprite = error;
-                informationBar.color = new Color32(222, 71, 71, 255);
-                timeBar.color = new Color32(222, 71, 71, 255);
-                break;
-        }
+        iconLayer.sprite = notifyList[index].iconSprite;
+        informationBar.color = notifyList[index].notifyColor;
+        timeBar.color = notifyList[index].notifyColor;
     }
 
-    #region Default Notifications
-    //Public functions for using standard Notify types
-    // Called in some script for example a Terminal
-
-    public void NotifyInformation()
+    public void NotifyTest(string type)
     {
-        icon.sprite = information;
-        iconTitle.text = "Information";
-        textContent.text = "Information notification message";
-        informationBar.color = new Color32(112, 162, 235, 255);
-        timeBar.color = new Color32(112, 162, 235, 255);
-    }
+        int index = ListTypeIndex(type);
+        if (index == -1) return;
 
-    public void NotifySuccess()
-    {
-        icon.sprite = success;
-        iconTitle.text = "Success";
-        textContent.text = "Success notification message";
-        informationBar.color = new Color32(104, 195, 123, 255);
-        timeBar.color = new Color32(104, 195, 123, 255);
+        iconLayer.sprite = notifyList[index].iconSprite;
+        iconTitle.text = type;
+        textContent.text = type + " notification message.";
+        informationBar.color = notifyList[index].notifyColor;
+        timeBar.color = notifyList[index].notifyColor;
     }
-
-    public void NotifyWarning()
-    {
-        icon.sprite = warning;
-        iconTitle.text = "Warning";
-        textContent.text = "Warning notification message";
-        informationBar.color = new Color32(226, 214, 78, 255);
-        timeBar.color = new Color32(226, 214, 78, 255);
-    }
-
-    public void NotifyError()
-    {
-        icon.sprite = error;
-        iconTitle.text = "Error";
-        textContent.text = "Error notification message";
-        informationBar.color = new Color32(222, 71, 71, 255);
-        timeBar.color = new Color32(222, 71, 71, 255);
-    }
-
-    #endregion
 }
