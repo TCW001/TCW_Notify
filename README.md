@@ -42,8 +42,4 @@ Você pode chamar a função como o exemplo de código abaixo:
 
 ![example](https://user-images.githubusercontent.com/100330702/205413533-276e5beb-8ba6-4591-8d54-3a0f11165ed7.png)
 
----
-
 > Você pode editar o código fonte (NotifyManager.cs)
-
-> É proibido usar Comercialmente ou se Identificar como Autor do Design deste Projeto.
