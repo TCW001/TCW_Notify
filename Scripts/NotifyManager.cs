@@ -55,7 +55,7 @@ public class NotifyManager : MonoBehaviour
         {
             if (notifyList[i].type == type) return i;
         }
-        Debug.LogWarning("O tipo" + type + "de notificação não existe");
+        Debug.LogWarning("The type" + type + "notification does not exist.");
         return -1;
     }
 
